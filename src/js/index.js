@@ -7,12 +7,13 @@ function getimgData(text) {
     drawText(text);
     let imgData = context.getImageData(0, 0, canvas.width, canvas.height);
     context.clearRect(0, 0, canvas.width, canvas.height);
+    let radius = Math.floor(canvas.width / 140) > 4 ? 4 : Math.floor(canvas.width / 140);
     let dots = [];
-    for (let x = 0; x < imgData.width; x += 6) {
-        for (let y = 0; y < imgData.height; y += 6) {
+    for (let x = 0; x < imgData.width; x += radius * 2) {
+        for (let y = 0; y < imgData.height; y += radius * 2) {
             let i = (y * imgData.width + x) * 4;
             if (imgData.data[i] >= 128) {
-                let dot = new Dot(x - 3, y - 3, 0, 3);
+                let dot = new Dot(x - radius, y - radius, 0, radius);
                 dots.push(dot);
             }
         }
@@ -22,7 +23,7 @@ function getimgData(text) {
 
 function drawText(text) {
     context.save();
-    context.font = canvas.width / 6.5 +"px bold";
+    context.font = canvas.width / 6.5 +"px bold arial,sans-serif";
     context.fillStyle = "rgba(168, 168, 168, 1)";
     context.textAlign = "center";
     context.textBaseline = "middle";
@@ -79,11 +80,14 @@ let pause = false;
 
 function resize_canvas(){
     canvas.width = $("#cas-wrapper").width();
-    canvas.height = $("#cas-wrapper").height();
+    canvas.height = canvas.width / 3;
 }
 
 window.onresize = resize_canvas;
 resize_canvas();
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
 setData();
 initAnimate();
 animate();
@@ -114,7 +118,7 @@ function animate() {
                     setTimeout(function () {
                         pause = false;
                         derection = false;
-                    }, 500)
+                    }, 10000)
                 } else {
                     dot.x = dot.x + (dot.dx - dot.x) * 0.05;
                     dot.y = dot.y + (dot.dy - dot.y) * 0.05;

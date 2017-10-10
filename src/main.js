@@ -1,4 +1,7 @@
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './scss/material-icons.scss'
+import './scss/master.scss'
+import './scss/common.scss'
 import './scss/index.scss'
 import './js/index'
