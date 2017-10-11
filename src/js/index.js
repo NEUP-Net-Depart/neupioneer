@@ -1,3 +1,6 @@
+import './master'
+import '../scss/index.scss'
+
 Array.prototype.forEach = function (callback) {
     for (let i = 0; i < this.length; i++)
         callback.call(this[i]);

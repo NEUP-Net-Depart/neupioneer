@@ -2,10 +2,13 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./src/main.js",
+  entry: {
+      'index': './src/js/index.js',
+      'signup': './src/js/signup.js'
+  },
   output: {
     path: __dirname + '/public',
-    filename: "./dist/bundle.[hash].js"
+    filename: "./dist/[name].[hash].js"
   },
   module: {
     loaders: [
@@ -36,7 +39,15 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       filename: "index.html",
-      template: __dirname + "/src/tmpl/index.html"
+      template: __dirname + "/src/tmpl/index.html",
+      inject: true,
+      chunks: ['index']
+    }),
+    new HtmlWebpackPlugin({
+      filename: "signup.html",
+      template: __dirname + "/src/tmpl/signup.html",
+      inject: true,
+      chunks: ['signup']
     }),
   ],
   devtool:'eval-source-map',
